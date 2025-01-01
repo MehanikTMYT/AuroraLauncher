@@ -29,7 +29,7 @@ export class LogHelper {
     private static getLogFilePath(): string {
         return resolve(
             StorageHelper.logsDir,
-            `LauncherServer_${this.getFormatedDate().replace(" ", "_").replace(/:/g, "-")}.log`,
+            `LauncherServer_${new Date().toLocaleString().replace(" ", "_").replace(/:/g, "-")}.log`,
         );
     }
 
@@ -68,13 +68,9 @@ export class LogHelper {
         this.saveLog(msg + EOL);
     }
 
-    private static getFormatedDate() {
-        return new Date().toISOString().replace("T", " ").slice(0, -5);
-    }
-
     private static log(level: keyof typeof LOG_LEVELS, msg: any, ...args: any[]) {
         const coloredStr = [
-            chalk.gray(this.getFormatedDate()),
+            chalk.gray(new Date().toLocaleString()),
             LOG_LEVELS[level](` [${level}] `),
             msg,
         ].join("");
