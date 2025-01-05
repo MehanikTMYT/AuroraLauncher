@@ -26,10 +26,17 @@ export class LogHelper {
         process.env.AURORA_IS_DEBUG === "true" ||
         this.isDevEnabled;
 
+    static getFormatedDate() {
+        const date = new Date();
+        const numFmt = (num: number) => (num < 10 ? `0${num}` : num);
+
+        return `${numFmt(date.getFullYear())}-${numFmt(date.getMonth() + 1)}-${numFmt(date.getDate())} ${numFmt(date.getHours())}:${numFmt(date.getMinutes())}:${numFmt(date.getSeconds())}`;
+    }
+
     private static getLogFilePath(): string {
         return resolve(
             StorageHelper.logsDir,
-            `LauncherServer_${new Date().toLocaleString().replace(" ", "_").replace(/:/g, "-")}.log`,
+            `LauncherServer_${this.getFormatedDate().replace(" ", "_").replace(/:/g, "-")}.log`,
         );
     }
 
@@ -70,7 +77,7 @@ export class LogHelper {
 
     private static log(level: keyof typeof LOG_LEVELS, msg: any, ...args: any[]) {
         const coloredStr = [
-            chalk.gray(new Date().toLocaleString()),
+            chalk.gray(this.getFormatedDate()),
             LOG_LEVELS[level](` [${level}] `),
             msg,
         ].join("");
