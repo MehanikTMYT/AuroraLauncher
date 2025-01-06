@@ -41,7 +41,7 @@ export class HttpHelper {
         try {
             const { statusCode } = await request(url, { method: "HEAD" })
             return statusCode >= 200 && statusCode < 300
-        } catch (error) {
+        } catch {
             return false
         }
     }
@@ -239,7 +239,7 @@ export class HttpHelper {
                 file.destinationPath,
                 "sha1",
             )
-        } catch (error) {
+        } catch {
             return false
         }
 
