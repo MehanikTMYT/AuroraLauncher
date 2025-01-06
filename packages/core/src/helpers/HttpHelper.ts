@@ -233,16 +233,14 @@ export class HttpHelper {
     private static async verifyFileHash(file: File) {
         if (!file.sha1) return false
 
-        let currentHash
         try {
-            currentHash = await HashHelper.getHashFromFile(
+            return await HashHelper.compareFileHash(
                 file.destinationPath,
                 "sha1",
+                file.sha1,
             )
         } catch {
             return false
         }
-
-        return file.sha1 === currentHash
     }
 }
